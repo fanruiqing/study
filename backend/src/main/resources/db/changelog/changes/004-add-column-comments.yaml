@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-add-column-comments
+      author: ai-assistant
+      changes:
+        # 为 sessions 表添加注释
+        - sql:
+            sql: |
+              ALTER TABLE sessions COMMENT '会话表';
+              ALTER TABLE sessions MODIFY COLUMN id VARCHAR(36) COMMENT '会话ID' NOT NULL;
+              ALTER TABLE sessions MODIFY COLUMN title VARCHAR(255) COMMENT '会话标题' NOT NULL;
+              ALTER TABLE sessions MODIFY COLUMN created_at BIGINT COMMENT '创建时间戳' NOT NULL;
+              ALTER TABLE sessions MODIFY COLUMN updated_at BIGINT COMMENT '更新时间戳' NOT NULL;
+              ALTER TABLE sessions MODIFY COLUMN model_id VARCHAR(255) COMMENT '使用的模型ID(支持providerId:modelName格式)';
+        
+        # 为 messages 表添加注释
+        - sql:
+            sql: |
+              ALTER TABLE messages COMMENT '消息表';
+              ALTER TABLE messages MODIFY COLUMN id VARCHAR(36) COMMENT '消息ID' NOT NULL;
+              ALTER TABLE messages MODIFY COLUMN session_id VARCHAR(36) COMMENT '所属会话ID' NOT NULL;
+              ALTER TABLE messages MODIFY COLUMN role VARCHAR(20) COMMENT '角色(USER/ASSISTANT/SYSTEM)' NOT NULL;
+              ALTER TABLE messages MODIFY COLUMN content TEXT COMMENT '消息内容';
+              ALTER TABLE messages MODIFY COLUMN timestamp BIGINT COMMENT '消息时间戳' NOT NULL;
+              ALTER TABLE messages MODIFY COLUMN model_id VARCHAR(255) COMMENT '使用的模型ID(支持providerId:modelName格式)';
+              ALTER TABLE messages MODIFY COLUMN rating INT COMMENT '消息评分';
+              ALTER TABLE messages MODIFY COLUMN metadata TEXT COMMENT '元数据(JSON格式)';
+        
+        # 为 model_providers 表添加注释
+        - sql:
+            sql: |
+              ALTER TABLE model_providers COMMENT '模型提供商表';
+              ALTER TABLE model_providers MODIFY COLUMN id VARCHAR(36) COMMENT '提供商ID' NOT NULL;
+              ALTER TABLE model_providers MODIFY COLUMN name VARCHAR(100) COMMENT '提供商名称' NOT NULL;
+              ALTER TABLE model_providers MODIFY COLUMN type VARCHAR(20) COMMENT '提供商类型(OPENAI/CLAUDE等)' NOT NULL;
+              ALTER TABLE model_providers MODIFY COLUMN api_key VARCHAR(255) COMMENT 'API密钥';
+              ALTER TABLE model_providers MODIFY COLUMN base_url VARCHAR(255) COMMENT 'API基础URL';
+              ALTER TABLE model_providers MODIFY COLUMN model_name VARCHAR(100) COMMENT '默认模型名称';
+              ALTER TABLE model_providers MODIFY COLUMN models_json TEXT COMMENT '可用模型列表(JSON格式)';
+              ALTER TABLE model_providers MODIFY COLUMN is_active TINYINT(1) COMMENT '是否启用' DEFAULT 1;
+              ALTER TABLE model_providers MODIFY COLUMN temperature DOUBLE COMMENT '温度参数' DEFAULT 0.7;
+              ALTER TABLE model_providers MODIFY COLUMN max_tokens INT COMMENT '最大令牌数' DEFAULT 2048;
+        
+        # 为 prompt_templates 表添加注释
+        - sql:
+            sql: |
+              ALTER TABLE prompt_templates COMMENT '提示词模板表';
+              ALTER TABLE prompt_templates MODIFY COLUMN id VARCHAR(36) COMMENT '模板ID' NOT NULL;
+              ALTER TABLE prompt_templates MODIFY COLUMN title VARCHAR(255) COMMENT '模板标题' NOT NULL;
+              ALTER TABLE prompt_templates MODIFY COLUMN content TEXT COMMENT '模板内容' NOT NULL;
+              ALTER TABLE prompt_templates MODIFY COLUMN category VARCHAR(100) COMMENT '模板分类';
+              ALTER TABLE prompt_templates MODIFY COLUMN created_at BIGINT COMMENT '创建时间戳' NOT NULL;
+              ALTER TABLE prompt_templates MODIFY COLUMN updated_at BIGINT COMMENT '更新时间戳' NOT NULL;

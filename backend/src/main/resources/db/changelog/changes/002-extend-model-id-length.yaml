@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-extend-model-id-length
+      author: ai-assistant
+      changes:
+        - modifyDataType:
+            tableName: messages
+            columnName: model_id
+            newDataType: VARCHAR(255)
+        - addColumn:
+            tableName: messages
+            columns:
+              - column:
+                  name: temp_remarks
+                  type: VARCHAR(1)
+                  remarks: "临时字段用于触发注释更新"
+        - sql:
+            sql: "ALTER TABLE messages MODIFY COLUMN model_id VARCHAR(255) COMMENT '使用的模型ID(支持providerId:modelName格式)'"
+        - dropColumn:
+            tableName: messages
+            columnName: temp_remarks
+        - modifyDataType:
+            tableName: sessions
+            columnName: model_id
+            newDataType: VARCHAR(255)
+        - addColumn:
+            tableName: sessions
+            columns:
+              - column:
+                  name: temp_remarks
+                  type: VARCHAR(1)
+                  remarks: "临时字段用于触发注释更新"
+        - sql:
+            sql: "ALTER TABLE sessions MODIFY COLUMN model_id VARCHAR(255) COMMENT '使用的模型ID(支持providerId:modelName格式)'"
+        - dropColumn:
+            tableName: sessions
+            columnName: temp_remarks

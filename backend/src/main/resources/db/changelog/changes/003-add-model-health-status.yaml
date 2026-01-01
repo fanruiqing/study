@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-add-model-health-status
+      author: ai-assistant
+      changes:
+        - addColumn:
+            tableName: model_providers
+            columns:
+              - column:
+                  name: failed_models
+                  type: TEXT
+                  remarks: "JSON array of failed model IDs"

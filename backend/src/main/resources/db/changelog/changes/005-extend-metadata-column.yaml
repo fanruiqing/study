@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-extend-metadata-column
+      author: system
+      changes:
+        - modifyDataType:
+            tableName: messages
+            columnName: metadata
+            newDataType: LONGTEXT
+      rollback:
+        - modifyDataType:
+            tableName: messages
+            columnName: metadata
+            newDataType: TEXT

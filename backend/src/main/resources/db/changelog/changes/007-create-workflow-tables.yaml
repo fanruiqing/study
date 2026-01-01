@@ -1,0 +1,284 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007-create-workflow-tables
+      author: system
+      changes:
+        # 工作流表
+        - createTable:
+            tableName: workflows
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: definition
+                  type: LONGTEXT
+                  constraints:
+                    nullable: false
+                  remarks: 'JSON workflow definition'
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  defaultValue: 'DRAFT'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: version
+                  type: VARCHAR(50)
+                  defaultValue: '1.0.0'
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_endpoint
+                  type: VARCHAR(255)
+              - column:
+                  name: created_at
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: VARCHAR(36)
+
+        - createIndex:
+            indexName: idx_workflows_status
+            tableName: workflows
+            columns:
+              - column:
+                  name: status
+
+        - createIndex:
+            indexName: idx_workflows_created_at
+            tableName: workflows
+            columns:
+              - column:
+                  name: created_at
+
+        # 工作流执行表
+        - createTable:
+            tableName: workflow_executions
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: workflow_id
+                  type: VARCHAR(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: input
+                  type: LONGTEXT
+                  remarks: 'JSON input parameters'
+              - column:
+                  name: output
+                  type: LONGTEXT
+                  remarks: 'JSON output result'
+              - column:
+                  name: error
+                  type: TEXT
+              - column:
+                  name: start_time
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: BIGINT
+              - column:
+                  name: execution_log
+                  type: LONGTEXT
+                  remarks: 'JSON execution log'
+
+        - addForeignKeyConstraint:
+            baseTableName: workflow_executions
+            baseColumnNames: workflow_id
+            constraintName: fk_workflow_executions_workflow
+            referencedTableName: workflows
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - createIndex:
+            indexName: idx_workflow_executions_workflow_id
+            tableName: workflow_executions
+            columns:
+              - column:
+                  name: workflow_id
+
+        - createIndex:
+            indexName: idx_workflow_executions_status
+            tableName: workflow_executions
+            columns:
+              - column:
+                  name: status
+
+        - createIndex:
+            indexName: idx_workflow_executions_start_time
+            tableName: workflow_executions
+            columns:
+              - column:
+                  name: start_time
+
+        # 节点执行表
+        - createTable:
+            tableName: node_executions
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: execution_id
+                  type: VARCHAR(36)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: node_id
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: node_name
+                  type: VARCHAR(255)
+              - column:
+                  name: node_type
+                  type: VARCHAR(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: input
+                  type: LONGTEXT
+                  remarks: 'JSON input'
+              - column:
+                  name: output
+                  type: LONGTEXT
+                  remarks: 'JSON output'
+              - column:
+                  name: error
+                  type: TEXT
+              - column:
+                  name: start_time
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_time
+                  type: BIGINT
+              - column:
+                  name: retry_count
+                  type: INT
+                  defaultValue: '0'
+
+        - addForeignKeyConstraint:
+            baseTableName: node_executions
+            baseColumnNames: execution_id
+            constraintName: fk_node_executions_execution
+            referencedTableName: workflow_executions
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - createIndex:
+            indexName: idx_node_executions_execution_id
+            tableName: node_executions
+            columns:
+              - column:
+                  name: execution_id
+
+        - createIndex:
+            indexName: idx_node_executions_node_id
+            tableName: node_executions
+            columns:
+              - column:
+                  name: node_id
+
+        - createIndex:
+            indexName: idx_node_executions_status
+            tableName: node_executions
+            columns:
+              - column:
+                  name: status
+
+        # 工作流模板表
+        - createTable:
+            tableName: workflow_templates
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: category
+                  type: VARCHAR(100)
+              - column:
+                  name: definition
+                  type: LONGTEXT
+                  constraints:
+                    nullable: false
+                  remarks: 'JSON workflow definition'
+              - column:
+                  name: thumbnail
+                  type: VARCHAR(500)
+              - column:
+                  name: is_public
+                  type: BOOLEAN
+                  defaultValueBoolean: true
+              - column:
+                  name: created_at
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+
+        - createIndex:
+            indexName: idx_workflow_templates_category
+            tableName: workflow_templates
+            columns:
+              - column:
+                  name: category
+
+        - createIndex:
+            indexName: idx_workflow_templates_is_public
+            tableName: workflow_templates
+            columns:
+              - column:
+                  name: is_public

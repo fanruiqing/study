@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001-create-tables.yaml
+  - include:
+      file: db/changelog/changes/002-extend-model-id-length.yaml
+  - include:
+      file: db/changelog/changes/003-add-model-health-status.yaml
+  - include:
+      file: db/changelog/changes/004-add-column-comments.yaml
+  - include:
+      file: db/changelog/changes/005-extend-metadata-column.yaml
+  - include:
+      file: db/changelog/changes/005-create-knowledge-base-tables.yaml
+  - include:
+      file: db/changelog/changes/006-add-provider-to-knowledge-base.yaml
+  - include:
+      file: db/changelog/changes/007-create-workflow-tables.yaml

@@ -1,0 +1,91 @@
+# ===== IDE =====
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# ===== Kiro =====
+.kiro/
+
+# ===== Java / Maven =====
+backend/target/
+*.class
+*.jar
+*.war
+*.ear
+*.log
+hs_err_pid*
+
+# ===== Node.js / Frontend =====
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== Uploads & Data =====
+backend/uploads/
+uploads/
+*.db
+*.sqlite
+
+# ===== OS Files =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== Environment & Secrets =====
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+application-local.yml
+application-local.properties
+
+# ===== Test & Debug Scripts =====
+*.ps1
+*.bat
+*.sh
+test-*.html
+diagnose*.ps1
+check-*.ps1
+fix-*.ps1
+
+# ===== Temporary Documentation =====
+# 保留 README 相关文档，忽略其他临时文档
+# 忽略所有中文命名的 md 文件（临时文档）
+*-*.md
+!README*.md
+
+# 忽略特定临时文档模式
+*修复*.md
+*问题*.md
+*测试*.md
+*诊断*.md
+*验证*.md
+*总结*.md
+*说明*.md
+*指南*.md
+*清单*.md
+*进度*.md
+*报告*.md
+*功能*.md
+*实现*.md
+*实施*.md
+*方案*.md
+
+# ===== SQL Scripts =====
+*.sql
+
+# ===== Misc =====
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+test-paragraph.txt
+最终验收文档.md

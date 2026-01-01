@@ -1,0 +1,209 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-sessions-table
+      author: ai-assistant
+      changes:
+        - createTable:
+            tableName: sessions
+            remarks: "会话表"
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  remarks: "会话ID"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  remarks: "会话标题"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: BIGINT
+                  remarks: "创建时间戳"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: BIGINT
+                  remarks: "更新时间戳"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model_id
+                  type: VARCHAR(36)
+                  remarks: "使用的模型ID"
+
+  - changeSet:
+      id: 001-create-messages-table
+      author: ai-assistant
+      changes:
+        - createTable:
+            tableName: messages
+            remarks: "消息表"
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  remarks: "消息ID"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: session_id
+                  type: VARCHAR(36)
+                  remarks: "所属会话ID"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role
+                  type: VARCHAR(20)
+                  remarks: "角色(USER/ASSISTANT/SYSTEM)"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: TEXT
+                  remarks: "消息内容"
+              - column:
+                  name: timestamp
+                  type: BIGINT
+                  remarks: "消息时间戳"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: model_id
+                  type: VARCHAR(36)
+                  remarks: "使用的模型ID"
+              - column:
+                  name: rating
+                  type: INT
+                  remarks: "消息评分"
+              - column:
+                  name: metadata
+                  type: TEXT
+                  remarks: "元数据(JSON格式)"
+        - createIndex:
+            tableName: messages
+            indexName: idx_messages_session_id
+            columns:
+              - column:
+                  name: session_id
+        - createIndex:
+            tableName: messages
+            indexName: idx_messages_timestamp
+            columns:
+              - column:
+                  name: timestamp
+
+  - changeSet:
+      id: 001-create-model-providers-table
+      author: ai-assistant
+      changes:
+        - createTable:
+            tableName: model_providers
+            remarks: "模型提供商表"
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  remarks: "提供商ID"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(100)
+                  remarks: "提供商名称"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: VARCHAR(20)
+                  remarks: "提供商类型(OPENAI/CLAUDE等)"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: api_key
+                  type: VARCHAR(255)
+                  remarks: "API密钥"
+              - column:
+                  name: base_url
+                  type: VARCHAR(255)
+                  remarks: "API基础URL"
+              - column:
+                  name: model_name
+                  type: VARCHAR(100)
+                  remarks: "默认模型名称"
+              - column:
+                  name: models_json
+                  type: TEXT
+                  remarks: "可用模型列表(JSON格式)"
+              - column:
+                  name: is_active
+                  type: TINYINT(1)
+                  remarks: "是否启用"
+                  defaultValueNumeric: 1
+              - column:
+                  name: temperature
+                  type: DOUBLE
+                  remarks: "温度参数"
+                  defaultValueNumeric: 0.7
+              - column:
+                  name: max_tokens
+                  type: INT
+                  remarks: "最大令牌数"
+                  defaultValueNumeric: 2048
+
+  - changeSet:
+      id: 001-create-prompt-templates-table
+      author: ai-assistant
+      changes:
+        - createTable:
+            tableName: prompt_templates
+            remarks: "提示词模板表"
+            columns:
+              - column:
+                  name: id
+                  type: VARCHAR(36)
+                  remarks: "模板ID"
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(255)
+                  remarks: "模板标题"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: TEXT
+                  remarks: "模板内容"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: category
+                  type: VARCHAR(100)
+                  remarks: "模板分类"
+              - column:
+                  name: created_at
+                  type: BIGINT
+                  remarks: "创建时间戳"
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: BIGINT
+                  remarks: "更新时间戳"
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: prompt_templates
+            indexName: idx_prompt_templates_category
+            columns:
+              - column:
+                  name: category

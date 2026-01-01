@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-add-provider-to-knowledge-base
+      author: system
+      changes:
+        - addColumn:
+            tableName: knowledge_bases
+            columns:
+              - column:
+                  name: provider_id
+                  type: VARCHAR(36)
+                  remarks: '模型提供商ID'
+              - column:
+                  name: provider_name
+                  type: VARCHAR(100)
+                  remarks: '模型提供商名称'
