@@ -18,7 +18,7 @@
    cd backend/src/main/resources
    cp application-example.yml application.yml
    ```
-3. 编辑 `application.yml`，填入你的数据库连接信息和 API Key
+3. 编辑 `application.yml`，填入你的数据库连接信息
 
 > **注意**: 数据库表会通过 Liquibase 自动创建和迁移，无需手动执行 SQL 脚本。
 
@@ -50,6 +50,8 @@ npm run dev
 前端将在 http://localhost:5173 启动
 
 ## 配置模型
+
+API Key 通过应用内的「设置」页面管理，无需在配置文件中设置。
 
 1. 启动应用后，进入「设置」页面
 2. 点击「添加模型」
