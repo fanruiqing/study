@@ -45,6 +45,9 @@ desktop.ini
 *.key
 application-local.yml
 application-local.properties
+# 包含敏感信息的配置文件
+backend/src/main/resources/application.yml
+!backend/src/main/resources/application-example.yml
 
 # ===== Test & Debug Scripts =====
 *.ps1

@@ -11,9 +11,9 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.18.33.30:3306/study?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-    username: dbadmin
-    password: i5HMGTSi@4Wa
+    url: jdbc:mysql://localhost:3306/study?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: your_username
+    password: your_password
     druid:
       initial-size: 5
       min-idle: 5
@@ -38,8 +38,8 @@ spring:
   
   ai:
     openai:
-      api-key: ${OPENAI_API_KEY:sk-pmcjozkvpmqsdkqmixtjtjylhvhqtznozqlyxnkgzdypmjhs}
-      base-url: ${OPENAI_BASE_URL:https://api.siliconflow.cn}
+      api-key: ${OPENAI_API_KEY:your_api_key}
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com}
     vectorstore:
       simple:
         path: uploads/vector-store
@@ -56,14 +56,8 @@ file:
 # 文档切片配置
 document:
   chunking:
-    # 切片策略: 
-    #   paragraph - 一个段落一块（推荐，保持段落完整性）
-    #   smart - 智能段落切片（多个段落合并到目标大小）
-    #   fixed - 固定大小切片（传统方式）
     strategy: paragraph
-    # 目标块大小（字符数，仅在smart和fixed模式下使用）
     chunk-size: 1000
-    # 块之间的重叠（字符数，仅在smart和fixed模式下使用）
     overlap: 200
 
 # MyBatis-Plus configuration

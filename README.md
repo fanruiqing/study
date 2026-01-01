@@ -5,8 +5,8 @@
 ## 技术栈
 
 - **前端**: Vue 3 + TypeScript + Vite + Pinia + Element Plus
-- **后端**: Java 17 + Spring Boot 3 + Spring AI + Maven
-- **数据库**: SQLite
+- **后端**: Java 17 + Spring Boot 3 + Spring AI + Maven + MyBatis-Plus
+- **数据库**: MySQL 8.0+
 
 ## 快速开始
 
