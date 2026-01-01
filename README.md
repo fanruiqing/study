@@ -5,10 +5,22 @@
 ## 技术栈
 
 - **前端**: Vue 3 + TypeScript + Vite + Pinia + Element Plus
-- **后端**: Java 17 + Spring Boot 3 + Spring AI + Maven + MyBatis-Plus
+- **后端**: Java 17 + Spring Boot 3 + Spring AI + Maven + MyBatis-Plus + Liquibase
 - **数据库**: MySQL 8.0+
 
 ## 快速开始
+
+### 数据库配置
+
+1. 创建 MySQL 数据库（或让应用自动创建）
+2. 复制配置文件：
+   ```bash
+   cd backend/src/main/resources
+   cp application-example.yml application.yml
+   ```
+3. 编辑 `application.yml`，填入你的数据库连接信息和 API Key
+
+> **注意**: 数据库表会通过 Liquibase 自动创建和迁移，无需手动执行 SQL 脚本。
 
 ### 后端启动
 
@@ -20,6 +32,8 @@ mvn spring-boot:run
 ```
 
 后端将在 http://localhost:8080 启动
+
+首次启动时，Liquibase 会自动创建所有必要的数据库表。
 
 ### 前端启动
 
